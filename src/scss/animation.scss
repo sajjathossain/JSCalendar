@@ -1,0 +1,16 @@
+//All animation keyframes
+
+@keyframes example {
+    0% {
+        background-color: blue !important;
+    }
+
+    50%{
+        background-color: red !important;
+    }
+
+    100% {
+        background-color: pink !important;
+    }
+
+}
