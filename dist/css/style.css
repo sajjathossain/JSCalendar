@@ -6,6 +6,10 @@ body {
   position: initial;
 }
 
+body::-webkit-scrollbar {
+  display: none !important;
+}
+
 nav {
   margin: 0;
   padding: 0;
