@@ -1,4 +1,5 @@
 import LeapYear from './leapYear.js';
+import FirstDay from './firstDay.js'
 
 function fetchData(givenId) { 
 
@@ -52,6 +53,24 @@ function fetchData(givenId) {
     
  }
 
+ function getSpaces(index){
+    
+    const dN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const daySpaces = [1, 2, 3, 4, 5, 6, 7];
+    const date = new Date()
+    let fd = new FirstDay(date.getFullYear(), index, 0);
+    fd = fd.firstDay()
+    console.log(dN.indexOf(fd))
+
+    let spaces = ""
+    for(let i=0; i<daySpaces[dN.indexOf(fd)]; i++){
+        spaces += '<div class="date p-2 bg-info text-light text-center font-weight-bold"><div>'
+    }
+
+    return spaces;
+
+ }
+
 document.addEventListener("DOMContentLoaded", () => {
    const  months = [
 			"January",
@@ -70,6 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const monthSize = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const daySpaces = [1, 2, 3, 4, 5, 6, 7];
     const date = new Date();
 
 
@@ -80,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isLeapYear) {
         monthSize[1] = 29;
     }
+
 
 
 // to add all the days of a week
@@ -94,24 +115,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const month = date.getMonth();
 
     let currentMonth = '';
-
+``
     for (let i = 0; i < months.length; i++) {
         
-// To add all the dates
         let output = '';
-        for (let index = 1; index <= monthSize[i]; index++) {
+        let fd = new FirstDay(date.getFullYear(), i, 0);
+        fd = fd.firstDay()
+        fd = daySpaces[dayNames.indexOf(fd)]
 
-            if (i === month && index === date.getDate()) {
+        for (let index = 1; index < monthSize[i]+fd; index++) {
+            
+            if(index < fd){
+                output += `<div> </div>`
+            }
+            else if (i === month && index === date.getDate()) {
             
                 output += `
-                    <div data-toggle="modal" data-target="#exampleModalLong" class="date p-2 bg-dark text-light text-center font-weight-bold" id="${months[i]}_${index}">${index}</div>
+                    <div data-toggle="modal" data-target="#exampleModalLong" class="date p-2 bg-dark text-light text-center font-weight-bold" id="${months[i]}_${index}">${index-fd+1}</div>
                 `;
 
             
             } else {
 
                 output += `
-                <div data-toggle="modal" data-target="#exampleModalLong" class="date p-2 bg-info text-light text-center font-weight-bold" id="${months[i]}_${index}">${index}</div>
+                <div data-toggle="modal" data-target="#exampleModalLong" class="date p-2 bg-info text-light text-center font-weight-bold" id="${months[i]}_${index}">${index-fd+1}</div>
             `;
 
             }
@@ -119,12 +146,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
+
 // Printing current month along with dates
         currentMonth += `
         <div class="d-flex flex-column thisMonth">            
             <div class="bg-dark monthName text-center h3 p-2 text-light rounded">${months[i]}</div>
-            <div class="daysAndDate">${days}</div>
-            <div class="daysAndDate">${output}</div>
+            <div class="daysAndDate">
+                ${days}
+            </div>
+            <div class="daysAndDate">
+                ${output}
+            </div>
         </div>
         `;
   
