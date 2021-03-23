@@ -53,24 +53,6 @@ function fetchData(givenId) {
     
  }
 
- function getSpaces(index){
-    
-    const dN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const daySpaces = [1, 2, 3, 4, 5, 6, 7];
-    const date = new Date()
-    let fd = new FirstDay(date.getFullYear(), index, 0);
-    fd = fd.firstDay()
-    console.log(dN.indexOf(fd))
-
-    let spaces = ""
-    for(let i=0; i<daySpaces[dN.indexOf(fd)]; i++){
-        spaces += '<div class="date p-2 bg-info text-light text-center font-weight-bold"><div>'
-    }
-
-    return spaces;
-
- }
-
 document.addEventListener("DOMContentLoaded", () => {
    const  months = [
 			"January",
@@ -121,24 +103,24 @@ document.addEventListener("DOMContentLoaded", () => {
         let output = '';
         let fd = new FirstDay(date.getFullYear(), i, 0);
         fd = fd.firstDay()
-        fd = daySpaces[dayNames.indexOf(fd)]
+        fd = (daySpaces[dayNames.indexOf(fd)])
 
         for (let index = 1; index < monthSize[i]+fd; index++) {
             
             if(index < fd){
                 output += `<div> </div>`
             }
-            else if (i === month && index === date.getDate()) {
+            else if (i === month && index-fd+1 === date.getDate()) {
             
                 output += `
-                    <div data-toggle="modal" data-target="#exampleModalLong" class="date p-2 bg-dark text-light text-center font-weight-bold" id="${months[i]}_${index}">${index-fd+1}</div>
+                    <div data-toggle="modal" data-target="#exampleModalLong" class="date p-2 bg-dark text-light text-center font-weight-bold" id="${months[i]}_${index-fd+1}">${index-fd+1}</div>
                 `;
 
             
             } else {
 
                 output += `
-                <div data-toggle="modal" data-target="#exampleModalLong" class="date p-2 bg-info text-light text-center font-weight-bold" id="${months[i]}_${index}">${index-fd+1}</div>
+                <div data-toggle="modal" data-target="#exampleModalLong" class="date p-2 bg-info text-light text-center font-weight-bold" id="${months[i]}_${index-fd+1}">${index-fd+1}</div>
             `;
 
             }
