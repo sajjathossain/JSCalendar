@@ -10,7 +10,7 @@ function fetchData(givenId) {
             'Content-Type': 'application/json'
         },
         method: 'GET',
-        dataType: 'jsonp',
+        dataType: 'json',
         data: '',
         success: function (data) {
             
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const date = new Date();
 
 
-    document.getElementById("year").innerHTML = `<img type="svg" src="./dist/images/date.svg" alt="" class="img"/>Year : ${date.getFullYear()}`;
+    document.getElementById("year").innerHTML = `<img type="svg" src="./src/images/date.svg" alt="" class="img"/>Year : ${date.getFullYear()}`;
     const checkLeap = new LeapYear(date.getFullYear());
     const isLeapYear = checkLeap.leap();
     
